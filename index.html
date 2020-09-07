@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="tablesconstructor.css">
+	<title>Document</title>
+</head>
+<body>
+	<div class="firstTask">
+		<div id="usersTable"></div>
+	</div>
+	
+	<script src="tablesconstructor.js"></script>
+	<script>
+		const config1 = {
+		  parent: 'usersTable',
+		  columns: [
+		    {title: '№', value: '_index'},
+		    {title: 'Имя', value: 'name'},
+		    {title: 'Фамилия', value: 'surname'},
+		    {title: 'Возраст', value: 'age', type: 'number'},
+		    {title: 'Иdd', value: 'naddme'},
+		    {title: 'Фамdddилия', value: 'surndddame'},
+		    {title: 'Возрddsfdfст', value: 'agddde', type: 'number'},
+		  ]
+		};
+		const users = [
+		  {id: 30050, name: 'Вася', surname: 'Петров', age: 12, naddme:'ddd', surndddame:'ddfdfd', agddde:'dddd'},
+		  {id: 30051, name: 'Вася', surname: 'Васечкин', age: 15, naddme:'dfgdd', surndddame:'ddfdfghfd', agddde:'ddsfghdd'},
+		  {id: 30051, name: 'Васяd', surname: 'Васечкdин', age: 15, naddme:'dfg5dd', surndddame:'ddf5fghfd', agddde:'ddsfg5hdd'},
+		];
+		DataTable(config1, users);
+	</script>
+</body>
+</html>
