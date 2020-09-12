@@ -1,14 +1,14 @@
 let dataTable = {};
 function DataTable(config, data)
 {
-	let table = '<table>';
-	table += DataHead(config);
-	table += DataBody(data, config.parent);
+	let table = '<table class="table">';
+	table += createHead(config);
+	table += createBody(data, config.parent);
 	table += '</table>';
 	document.getElementById(config.parent).innerHTML = table;
 }
 
-function DataHead(config)
+function createHead(config)
 {
 	let counter = 0;
 	table = '<thead><tr>';
@@ -23,7 +23,7 @@ function DataHead(config)
 	table += '</tr></thead>';
 	return table;
 }
-function DataBody(data, id)
+function createBody(data, id)
 {
 	let counter1 = 0;
 	let counter;
