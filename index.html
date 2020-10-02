@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="tablesconstructorsort.css">
+	<title>Document</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css" integrity="sha384-HzLeBuhoNPvSl5KYnjx0BT+WB0QEEqLprO+NBkkk5gbc67FTaL7XIGa2w1L0Xbgc" crossorigin="anonymous">
+</head>
+<body>
+	<div class="firstTask">
+		<div id="usersTableSort"></div>
+	</div>
+	
+	<script src="tablesconstructorsort.js"></script>
+	<script>
+
+		const config1 = {
+		  parent: 'usersTableSort',
+		  columns: [
+			{title: '№', value: '_index'},
+		    {title: 'Имя', value: 'name'},
+		    {title: 'Фамилия', value: 'surname', sortable: true},
+		    {title: 'Возраст', value: 'age', type: 'number', sortable: true},
+		  ]
+		};
+
+		const users = [
+		  {id: 30050, name: 'Вася', surname: 'Петров', age: 12},
+		  {id: 30051, name: 'Вася', surname: 'Васечкин', age: 15},
+		  {id: 30051, name: 'Васяd', surname: 'Васечкdин', age: 15},
+		];
+		DataTable(config1, users);
+	</script>
+</body>
+</html>
