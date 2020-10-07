@@ -1,16 +1,24 @@
 let dataTable = {};
-function DataTable(config, data)
+function DataTable(config, data, idButton, typeSortNew, classsButton)
 {
 	let table = '<table class="table">';
-	dataTable[config.parent + '.config'] = Object.assign({}, config);
-	dataTable[config.parent + '.data'] = Object.assign({}, data);
-	table += createHead(config);
+	let counter = 0;
+	let dataArray = [];
+	dataObj = {...data};
+	while(dataObj[counter] != undefined)
+	{
+		dataArray[counter] = dataObj[counter];
+		counter++;
+	}
+	dataTable[config.parent + '.config'] = {...config};
+	(idButton) ? (counter = 0) : (dataTable[config.parent + '.data'] = dataArray) ;
+	table += createHead(config, idButton, typeSortNew, classsButton);
 	table += createBody(data, config.parent);
 	table += '</table>';
 	document.getElementById(config.parent).innerHTML = table;
 }
 
-function createHead(config)
+function createHead(config, idButton, typeSortNew, classsButton)
 {
 	let counter = 0;
 	let temp = '';
@@ -21,7 +29,9 @@ function createHead(config)
 		dataTable[config.parent + '.nameProperties' + counter] = config.columns[counter].value;
 		if(config.columns[counter].sortable)
 		{
-			temp = '<td>' + config.columns[counter].title + '<i class="fas fa-sort" id="' + config.parent + '_buttonSort' + counter + '" data-type="1" data-number="' + counter + '"onclick="sortConfigArray(`' + config.parent + '_buttonSort' + counter + '`, `' + config.parent + '`)"></i>' + '</td>';
+			(classsButton) ? (classBtn = classsButton) : (classBtn = 'fa-sort');
+			temp = '<td>' + config.columns[counter].title + '<i class="fas ' + classBtn + '" id="' + config.parent + '_buttonSort' + counter + '" data-number="' + counter + '"onclick="sortAndBuildTable(`' + config.parent + '_buttonSort' + counter + '`, `' + config.parent + '`)"></i>' + '</td>';
+			(idButton) ? (dataTable[config.parent + '.' + idButton + 'Type'] = typeSortNew) : (dataTable[config.parent + '.' + config.parent + '_buttonSort' + counter + 'Type'] = 1);
 		}
 		table += temp;
 		dataTable[config.parent + '.type' + counter] = (config.columns[counter].type == 'number') ? 1 : 0;
@@ -33,9 +43,17 @@ function createHead(config)
 }
 function createBody(data, id)
 {
-	dataTable[id + '.dataNow'] = Object.assign({}, data);
+	dataObj = {...data};
+	let dataArray = [];
+	let counter = 0;
+	while(dataObj[counter] != undefined)
+	{
+		dataArray[counter] = dataObj[counter];
+		counter++;
+	}
+	dataTable[id + '.dataNow'] = dataArray;
 	let counter1 = 0;
-	let counter;
+	counter = 0;
 	let temp = '';
 	table = '<tbody>';
 	while(counter1 != data.length)
@@ -50,7 +68,7 @@ function createBody(data, id)
 				table += '<td class="align-right">' + data[counter1][temp] + '</td>';
 			}
 			else
-			{
+			{	
 				table += '<td>' + data[counter1][temp] + '</td>';
 			}
 			counter++;
@@ -62,13 +80,48 @@ function createBody(data, id)
 	return table;
 }	
 
-function sortConfigArray(idButton, id)
+function sortAndBuildTable(idButton, id)
 {
-	let data = Object.assign({}, dataTable[id + '.dataNow']);
-	typeSort = document.getElementById(idButton).dataset.type;
+	let dataNow = dataTable[id + '.dataNow'];
+	let dataNowArray = [];
+	let typeSortNew;
+	typeSort = dataTable[id + '.' + idButton + 'Type'];
 	nameColumn = dataTable[id + '.' + 'nameProperties' + document.getElementById(idButton).dataset.number];
-	console.log(data)
-	data.sort((a, b) => a.name > b.name ? 1 : -1);
-	console.log(data)
-	// DataTable(dataTabel[id + '.config'], data);
+	let counter = 0;
+	while(dataNow[counter] != undefined)
+	{
+		dataNowArray[counter] = dataNow[counter];
+		counter++;
+	}
+	if(typeSort == 1)
+	{
+		dataNowArray.sort((a, b) => a[nameColumn] > b[nameColumn] ? 1 : -1);
+		typeSortNew = 2;
+		classsButton = 'fa-sort-up';
+	}
+	if(typeSort == 2)
+	{
+		dataNowArray.sort((a, b) => a[nameColumn] < b[nameColumn] ? 1 : -1);
+		typeSortNew = 0;
+		classsButton = 'fa-sort-down';
+	}
+	if(typeSort == 0)
+	{
+		dataNowArray = dataTable[id + '.data'];
+		typeSortNew = 1;
+		classsButton = 'fa-sort';
+	}
+	counter = 0;
+	DataTable(dataTable[id + '.config'], dataNowArray, idButton, typeSortNew, classsButton);
 }
+// function objectToArray(direction)
+// {
+// 	let counter = 0;
+// 	let tempArray = [];
+// 	while(direction[counter] != undefined)
+// 	{
+// 		tempArray[counter] = direction[counter];
+// 		counter++;
+// 	}
+// 	return tempArray;
+// }
