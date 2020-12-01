@@ -26,9 +26,9 @@
 			{
 			    fields: ['name', 'surname'],
 			    filters: [
-			    	"v.toLowerCase()",
-			    	"toKeyboardLayout(v, 'ru', 'en')",// второе значение с какого языка, третье на какой 
-			    	"toKeyboardLayout(v, 'en', 'ru')" 
+			    	v => v.toLowerCase(),
+			    	v => toKeyboardLayout(v, 'ru', 'en'),// второе значение с какого языка, третье на какой 
+			    	v => toKeyboardLayout(v, 'en', 'ru') 
 			    ]
 			}
 		};
