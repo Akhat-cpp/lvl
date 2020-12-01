@@ -154,10 +154,10 @@ function search(configLink, dataLink)
 				counter3 = 0;
 				while(counter3 != filters.length)
 				{
-					v = document.getElementById(config.parent + 'Input').value;
-					textAfterFilter = eval(filters[counter3]);
-					v = data[counter2][fields[counter]];
-					dataAfterFilter = eval(filters[counter3]);
+					x = document.getElementById(config.parent + 'Input').value;
+					textAfterFilter = filters[counter3](x);
+					x = data[counter2][fields[counter]];
+					dataAfterFilter = filters[counter3](x);
 					(textAfterFilter == dataAfterFilter) ? (temp++) : (temp = temp);
 					counter3++;
 				}
